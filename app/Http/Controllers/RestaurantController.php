@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\Category; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\storeRestaurantRequest;
 
 class RestaurantController extends Controller
 {
@@ -26,7 +30,9 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view("restaurants.create", compact('categories'));
     }
 
     /**
@@ -35,9 +41,31 @@ class RestaurantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRestaurantRequest $request)
     {
-        //
+        $input = $request->all();
+
+
+        //$validate = $request->validate([
+        //    'name' => 'required|string|min:5|max:50',
+        //    'description' => 'required|string|min:10',
+        //    'city' => 'required|string|min:5|max:30',
+        //    'phone' => 'required|alpha_dash|min:10|max:10',
+        //    'category_id' => 'required|exists:categories,id',
+        //    'delivery' => [
+        //        'required',
+        //        Rule::in(['y','n']),
+        //        ]
+        //]);
+
+        $restaurant = new Restaurant();
+        $restaurant->fill($input);
+        $restaurant->user_id= Auth::id();
+        $restaurant->save();
+
+        Session::flash('success', 'Restaurante agregado exitosamente');
+
+        return redirect(route('home'));
     }
 
     /**
