@@ -15,12 +15,12 @@
 
         @for($j = 0; $j < 4; $j++)
 
-            @if(isset($restaurants[($i * 4 +$j]))
+            @if(isset($restaurants[($i * 4 + $j]))
                 <?php
                     $restaurant = $restaurants[($i * 4 + $j];
                 ?>
 
-                <div class="col-3">
+                <div class="col-3 mb-3">
                     <div class = "card">
                         <img src="..." class="card-img-top" alt="...">
                         <div class="card-body">
@@ -38,9 +38,8 @@
     </div>
 
     @endfor
-
-
     
+    {{ $restaurants->links() }}
 </div>
 
 @endsection
