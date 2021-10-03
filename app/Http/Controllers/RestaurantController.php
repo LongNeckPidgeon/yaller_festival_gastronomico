@@ -18,7 +18,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::orderBy('name', 'asc')->get();
+        $restaurants = Restaurant::owned(Auth::id())->orderBy('name','asc')->get();
 
         return view('restaurants.index', compact('restaurants'));
     }
@@ -87,7 +87,9 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view("restaurants.edit", compact('categories', 'restaurant'));
     }
 
     /**
@@ -99,7 +101,15 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        //
+        $input = $request->all();
+
+        $restaurant->fill($input);
+        $restaurant->user_id= Auth::id();
+        $restaurant->save();
+
+        Session::flash('success', 'Restaurante editado exitosamente');
+
+        return redirect(route('restaurants.index'));
     }
 
     /**
@@ -110,7 +120,11 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        $restaurant->delete();
+
+        Session::flash('success', 'Restaurante removido exitosamente');
+
+        return redirect(route('home')); 
     }
 
     //Este metodo lo hicimos nosotros

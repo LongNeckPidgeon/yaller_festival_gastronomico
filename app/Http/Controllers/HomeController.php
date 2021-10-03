@@ -28,6 +28,6 @@ class HomeController extends Controller
     {
         $restaurants = Restaurant::owned(Auth::id())->orderBy('name', 'asc')->get();
         
-        return view('home.index');
+        return view('home.index', compact('restaurants'));
     }
 }
