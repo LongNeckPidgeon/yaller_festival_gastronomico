@@ -21,7 +21,7 @@
 
     {{ Form::open(['route' => [
             'restaurants.destroy', $restaurant->id],
-            'method'=> 'delete'
+            'method'=> 'delete',
             'onsubmit' => ' return confirm(\'Esta seguro que desea remover el restaurante?\nEsta accion no se puede deshacer\')'
             ]) }}
         <button type="submit" class="btn btn-danger mt-3" }}>Remover</button>

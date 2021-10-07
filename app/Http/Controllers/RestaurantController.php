@@ -140,18 +140,19 @@ class RestaurantController extends Controller
     }
 
     //Este metodo lo hicimos nosotros
-    public function showFrontPage(Request $requests)
+    public function showFrontPage(Request $request)
     {
         $filter = $request['filter'] ?? null;
 
-        if(!isset($requests['filter']))
+        if(!isset($request['filter']))
             $restaurants = Restaurant::orderBy('name', 'asc')->paginate(8);
         else
         {
-        $restaurants = Restaurant::orderBy('name', 'asc')->where('category_id', '=', $requests['filter'])->paginate(8);
-        $restaurants->appends(['filter' => $filter]);
+            $restaurants = Restaurant::orderBy('name', 'asc')->where('category_id', '=', $request['filter'])->paginate(8);
+            $restaurants->appends(['filter' => $filter]);
         }
-        $categories = Category::orderBy('name', 'asc')->get()->pluck('name', 'id');
+
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('front_page.index', compact('restaurants', 'categories', 'filter'));
     }

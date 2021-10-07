@@ -21,13 +21,15 @@ use App\Http\Controllers\RestaurantController;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'showFrontPage'])->name('front_page.index');
+Route::get('/', [App\Http\Controllers\RestaurantController::class, 'showFrontPage'])->name('front_page.index');
 
 //Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
 //Route::get('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'show'])->name('restaurants.show');
 //Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'create'])->name('restaurants.create');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('restaurants', App\Http\Controllers\RestaurantController::class)->middleware('Auth');
+    Route::resource('restaurants', App\Http\Controllers\RestaurantController::class);
+});
 

@@ -13,9 +13,9 @@
         </ul>
     @endif
 
-        {{ Form::model($restaurant, ['route' => ['restaurants.update', $restaurant->$id]]) }}
+        {{ Form::model($restaurant, ['route' => ['restaurants.update', $restaurant->id], 'method' => 'put']) }}
 
-        @include('restaurants.form_fields');
+        @include('restaurants.form_fields')
 
         {{ Form::submit('Editar', ['class' => 'btn btn-primary']); }}
         <a href=" {{ URL::previous() }}" class="btn btn-secondary">Cancelar</a>

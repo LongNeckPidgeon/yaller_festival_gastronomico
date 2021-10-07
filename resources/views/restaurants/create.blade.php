@@ -12,9 +12,10 @@
         @endforeach
         </ul>
     </div>
+    @endif
 
     {{ Form::open(['route' => 'restaurants.store', 'method' => 'post']) }}
-    @include('restaurants.form_fields');
+    @include('restaurants.form_fields')
 
     @if(Auth::user()->type=='admin')
     {{ Form::submit('Crear', ['class' => 'btn btn-primary']); }}
