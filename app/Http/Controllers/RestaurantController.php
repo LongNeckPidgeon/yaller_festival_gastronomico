@@ -156,4 +156,8 @@ class RestaurantController extends Controller
 
         return view('front_page.index', compact('restaurants', 'categories', 'filter'));
     }
+
+    public function showInfoRestaurant(Request $request, Restaurant $restaurant){
+        return view('front_page.info', compact('restaurant'));
+    }
 }

@@ -22,6 +22,7 @@ use App\Http\Controllers\RestaurantController;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\RestaurantController::class, 'showFrontPage'])->name('front_page.index');
+Route::get('/info/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'showInfoRestaurant'])->name('front_page.info');
 
 //Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
 //Route::get('/restaurants/{restaurant}', [App\Http\Controllers\RestaurantController::class, 'show'])->name('restaurants.show');
